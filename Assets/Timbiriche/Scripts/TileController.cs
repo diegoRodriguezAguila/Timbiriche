@@ -7,6 +7,10 @@ public class TileController : MonoBehaviour
     void Start()
     {
         colliders = GetComponents<PolygonCollider2D>();
+        // set the scaling
+        //Vector3 scale = new Vector3(0.5f, 0.5f, 1f);
+        //transform.localScale = scale;
+        // set the position
     }
 
     // Update is called once per frame
@@ -18,9 +22,6 @@ public class TileController : MonoBehaviour
     {
         var mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         var hitCollider = Physics2D.OverlapPoint(mousePosition);
-
-        Debug.Log("mouse pos " + mousePosition.x + " y " + mousePosition.y + " ");
-
 
         if (hitCollider)
         {
