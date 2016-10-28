@@ -11,22 +11,25 @@ public class BoardController : MonoBehaviour
     private float scaleFactor;
     private Vector3 scale;
 
-    void Start()
+    private void Start()
     {
-        if (boardSize % 2 == 0)
+        if (boardSize%2 == 0)
             throw new ArgumentException("boardSize must be odd");
-        totalTiles = boardSize * boardSize / 2 + 1;
+        totalTiles = boardSize*boardSize/2 + 1;
         board = new List<GameObject>(totalTiles);
-        scaleFactor = 0.7f;//TODO determine factor depending on totalTiles
+        float width = Screen.width;
+        float reqWidth = boardSize*64 + 20;
+        float factor = width/reqWidth;
+        scaleFactor = factor > 1.2f ? 1.2f : factor;
         scale = new Vector3(scaleFactor, scaleFactor, 1f);
         GenerateBoard();
     }
 
 
-    void GenerateBoard()
+    private void GenerateBoard()
     {
-        int posLimit = boardSize / 2;
-        int negLimit = -1 * (boardSize / 2);
+        int posLimit = boardSize/2;
+        int negLimit = -1*(boardSize/2);
         int rowCount = 1;
         int startPos = 0;
         bool underLimit = true;
@@ -48,19 +51,19 @@ public class BoardController : MonoBehaviour
         }
     }
 
-    void GenerateRow(int startPos, int limit, int y)
+    private void GenerateRow(int startPos, int limit, int y)
     {
         for (int i = 0; i < limit; i++)
         {
-            var tile = (GameObject)Instantiate(cellPrefab, new Vector3((startPos + i) * scaleFactor,
-                y * scaleFactor, 0), Quaternion.identity);
+            var tile = (GameObject) Instantiate(cellPrefab, new Vector3((startPos + i)*scaleFactor,
+                y*scaleFactor, 0), Quaternion.identity);
             tile.transform.localScale = scale;
             board.Add(tile);
         }
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
     }
 }
